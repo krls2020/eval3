@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+        <header class="sidebar-head">
+          <h1>📝 Notes</h1>
+          <button id="new-btn" class="btn btn-primary" title="New note (Ctrl+N)">
+            New
+          </button>
+        </header>
+        <div class="search">
+          <input
+            id="search"
+            type="search"
+            placeholder="Search notes…"
+            autocomplete="off"
+          />
+        </div>
+        <ul id="note-list" class="note-list"></ul>
+        <footer class="sidebar-foot">
+          <span id="count"></span>
+        </footer>
+      </aside>
+
+      <main class="editor" id="editor">
+        <div class="editor-empty" id="empty-state">
+          <p>Select a note or create a new one.</p>
+        </div>
+
+        <div class="editor-pane hidden" id="editor-pane">
+          <div class="editor-toolbar">
+            <input
+              id="title"
+              class="title-input"
+              type="text"
+              placeholder="Untitled"
+            />
+            <div class="toolbar-actions">
+              <button id="preview-toggle" class="btn" title="Toggle preview">
+                Preview
+              </button>
+              <span id="status" class="status"></span>
+              <button id="delete-btn" class="btn btn-danger" title="Delete note">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="editor-body">
+            <textarea
+              id="content"
+              class="content-input"
+              placeholder="Write in markdown…"
+              spellcheck="false"
+            ></textarea>
+            <div id="preview" class="preview markdown hidden"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
