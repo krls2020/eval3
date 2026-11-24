@@ -1,0 +1,17 @@
+# The alfa KRLS "checks" fixture (mate-dev outcomes/checks/targets.json alfa fixtures.checks): a pull request
+# fails while the marker file exists and prints the marker's line, so a Mate's agent finds it in the check's log.
+name: checks
+on:
+  pull_request:
+jobs:
+  marker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: no marker file
+        run: |
+          if [ -e ci-marker.txt ]; then
+            echo "ci-marker.txt is present: $(head -n 1 ci-marker.txt)"
+            exit 1
+          fi
+          echo "no ci-marker.txt"

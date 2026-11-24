@@ -1,35 +1,23 @@
 zerops:
+  - setup: apppool
+    build:
+      base: nodejs@22
+    run:
+      base: nodejs@22
+      ports:
+        - port: 4001
+          httpSupport: true
+        - port: 4002
+          httpSupport: true
+        - port: 4003
+          httpSupport: true
+      prepareCommands:
+        - sudo sh -c 'u=https://github.com/zeropsio/zcp/releases/latest/download/zcp-devsup-linux-amd64; f=/usr/local/bin/zcp-devsup; if command -v curl >/dev/null; then curl -fsSL "$u" -o "$f"; else wget -qO "$f" "$u"; fi && chmod 0755 "$f"'
+      start: zcp-devsup run
   - setup: app
     build:
-      base: nodejs@24
-      buildCommands:
-        - npm install
-      deployFiles:
-        - .
+      base: nodejs@22
+      deployFiles: ./
     run:
-      base: nodejs@24
-      ports:
-        - port: 3000
-          httpSupport: true
-      envVariables:
-        PORT: 3000
-        DATABASE_URL: postgresql://${db_user}:${db_password}@${db_hostname}:${db_port}/${db_dbName}
-      start: npm start
-
-  - setup: prod
-    build:
-      base: nodejs@24
-      buildCommands:
-        - npm install
-      deployFiles:
-        - .
-    run:
-      base: nodejs@24
-      ports:
-        - port: 3000
-          httpSupport: true
-      envVariables:
-        PORT: 3000
-        NODE_ENV: production
-        DATABASE_URL: postgresql://${db_user}:${db_password}@${db_hostname}:${db_port}/${db_dbName}
-      start: npm start
+      base: nodejs@22
+      start: zsc noop --silent
